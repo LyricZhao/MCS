@@ -1,3 +1,4 @@
+# include "sa.h"
 # include "solver.h"
 # include "csolver.h"
 # include "computemain.h"
@@ -6,11 +7,13 @@
 # include <tuple>
 # include <unistd.h>
 # include <iostream>
+# include <unistd.h>
 
 # include <QPoint>
 # include <QTimer>
 # include <QPainter>
 # include <QMouseEvent>
+# include <QMutexLocker>
 # include <QInputDialog>
 
 ComputeMain:: ComputeMain(QWidget *parent, int r, int in1, int in2, int ou1, int ou2, int ou3, bool isa, double itv) :
@@ -18,6 +21,7 @@ ComputeMain:: ComputeMain(QWidget *parent, int r, int in1, int in2, int ou1, int
     row(r), i1(in1), i2(in2), o1(ou1), o2(ou2), o3(ou3), sa(isa), targetValue(itv),
     ui(new Ui::ComputeMain) {
     changeOK = false;
+    saThread = NULL;
     // draw chip
     for(int i = 0; i < row - 1; ++ i) {
         for(int j = 0; j < row; ++ j) {
@@ -37,16 +41,31 @@ ComputeMain:: ComputeMain(QWidget *parent, int r, int in1, int in2, int ou1, int
             fH.push_back(200);
         }
     }
-    changeOK = true;
+
     this -> setMouseTracking(true);
     ui -> setupUi(this);
+
+    runningsa = false;
 
     timerThread = new timer(ui -> lcd);
     connect(this, SIGNAL(m_startClock()), timerThread, SLOT(startClock()));
     connect(this, SIGNAL(m_endClock()), timerThread, SLOT(endClock()));
     timerThread -> start();
 
-    compute();
+    if(sa == false) {
+        ui -> admLabel -> hide();
+        ui -> saLayout -> setEnabled(false);
+        ui -> resultLabel -> hide();
+        ui -> saStart -> hide();
+        ui -> saStop -> hide();
+        ui -> roundLabel -> hide();
+        ui -> roundLCD -> hide();
+        changeOK = true;
+        compute();
+    } else {
+        ui -> saStop -> setEnabled(false);
+        ui -> cmLabel -> hide();
+    }
 }
 
 QColor ComputeMain:: getColor(double v) {
@@ -60,6 +79,9 @@ QColor ComputeMain:: getColor(double v) {
 }
 
 void ComputeMain:: paintEvent(QPaintEvent *ev) {
+    // std:: cout << fo1 << " " << fo2 << " " << fo3 << std:: endl;
+
+
     int mcX = 200, mcY = 225;
     int maxX = (row - 1) * mR + row * mL;
     int maxY = (row - 1) * mR + row * mL;
@@ -91,8 +113,8 @@ void ComputeMain:: paintEvent(QPaintEvent *ev) {
 
     // draw edge
     painter.setBrush(Qt:: red);
-    painter.setBrush(getColor(fi1)); painter.drawRect(i1 * (mL + mR), -mR, mL, mR);
-    painter.setBrush(getColor(fi2)); painter.drawRect(i2 * (mL + mR), -mR, mL, mR);
+    painter.setBrush(getColor(200)); painter.drawRect(i1 * (mL + mR), -mR, mL, mR);
+    painter.setBrush(getColor(200)); painter.drawRect(i2 * (mL + mR), -mR, mL, mR);
     painter.setBrush(getColor(fo1)); painter.drawRect(o1 * (mL + mR), maxY, mL, mR);
     painter.setBrush(getColor(fo2)); painter.drawRect(o2 * (mL + mR), maxY, mL, mR);
     painter.setBrush(getColor(fo3)); painter.drawRect(o3 * (mL + mR), maxY, mL, mR);
@@ -303,4 +325,45 @@ void ComputeMain:: compute() {
 
     changeOK = true;
     emit m_endClock();
+}
+
+void ComputeMain::on_saStart_clicked() {
+    if(runningsa) return;
+    ui -> saStart -> setEnabled(false);
+    ui -> saStop -> setEnabled(true);
+    stopSignal = false;
+    runningsa = true;
+    if(saThread != NULL) delete saThread;
+    saThread = new SA(row, targetValue, i1, i2, o1, o2, o3, fo1, fo2, fo3, ui -> ol1, ui -> ol2, ui -> ol3, qSV, qSH, fV, fH, mutex, stopSignal, ui -> resultLabel, ui -> roundLCD, ui -> lcd);
+    connect(saThread, SIGNAL(roundEnd()), this, SLOT(update()));
+    connect(saThread, SIGNAL(AutoStop()), this, SLOT(SAStop()));
+    saThread -> start();
+}
+
+void ComputeMain:: SAStop() {
+    ui -> saStart -> setEnabled(true);
+    ui -> saStop -> setEnabled(false);
+    disconnect(saThread, SIGNAL(roundEnd()), this, SLOT(update()));
+    disconnect(saThread, SIGNAL(AutoStop()), this, SLOT(SAStop()));
+    saThread -> wait();
+    delete saThread;
+
+    runningsa = false;
+    saThread = NULL;
+}
+
+void ComputeMain::on_saStop_clicked() {
+    if(runningsa == false) return;
+    ui -> saStart -> setEnabled(true);
+    ui -> saStop -> setEnabled(false);
+    QMutexLocker locker(&mutex);
+    stopSignal = true;
+    disconnect(saThread, SIGNAL(roundEnd()), this, SLOT(update()));
+    disconnect(saThread, SIGNAL(AutoStop()), this, SLOT(SAStop()));
+    locker.unlock();
+    saThread -> wait();
+    delete saThread;
+
+    runningsa = false;
+    saThread = NULL;
 }

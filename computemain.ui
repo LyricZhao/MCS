@@ -37,7 +37,7 @@
       <item>
        <widget class="QLabel" name="timerLabel">
         <property name="text">
-         <string>Timer (ms):</string>
+         <string>Timer :</string>
         </property>
        </widget>
       </item>
@@ -123,6 +123,89 @@
      </layout>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="admLabel">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>70</y>
+     <width>171</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 19pt &quot;American Typewriter&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Auto Design Mode</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>330</y>
+     <width>271</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="saLayout">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QPushButton" name="saStart">
+        <property name="text">
+         <string>Start</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="saStop">
+        <property name="text">
+         <string>Stop</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="resultLabel">
+      <property name="text">
+       <string>Result: N/A</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="3,5">
+      <item>
+       <widget class="QLabel" name="roundLabel">
+        <property name="text">
+         <string>Rounds:      </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLCDNumber" name="roundLCD"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="cmLabel">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>70</y>
+     <width>161</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 18pt &quot;American Typewriter&quot;;</string>
+   </property>
+   <property name="text">
+    <string>Computing Mode</string>
+   </property>
   </widget>
  </widget>
  <resources/>

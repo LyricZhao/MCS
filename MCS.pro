@@ -31,9 +31,8 @@ SOURCES += \
     computemain.cpp \
     solver.cpp \
     timer.cpp \
-    csolver.cpp
-
-QMAKE_CXXFLAGS += -Wunused-parameter
+    csolver.cpp \
+    sa.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +41,8 @@ HEADERS += \
     computemain.h \
     solver.h \
     timer.h \
-    csolver.h
+    csolver.h \
+    sa.h
 
 FORMS += \
         mainwindow.ui \
@@ -52,3 +52,7 @@ FORMS += \
 
 RESOURCES += \
     resource.qrc
+
+QMAKE_CXXFLAGS += -w
+QMAKE_CFLAGS += -w
+QMAK
