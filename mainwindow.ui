@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>613</width>
+    <height>397</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MCS</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>578</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_1">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="resource.qrc">:/Logo/logo.png</pixmap>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QPushButton" name="AboutButton">
+         <property name="text">
+          <string>About</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="QuitButton">
+         <property name="text">
+          <string>Quit</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>613</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu0">
+    <property name="title">
+     <string>Compute</string>
+    </property>
+    <addaction name="ComputeAction"/>
+    <addaction name="SAAction"/>
+   </widget>
+   <widget class="QMenu" name="menu1">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="AboutAction"/>
+    <addaction name="QuitAction"/>
+   </widget>
+   <addaction name="menu0"/>
+   <addaction name="menu1"/>
+  </widget>
+  <action name="ComputeAction">
+   <property name="text">
+    <string>New Computation</string>
+   </property>
+  </action>
+  <action name="AboutAction">
+   <property name="text">
+    <string>Donate</string>
+   </property>
+  </action>
+  <action name="SAAction">
+   <property name="text">
+    <string>Simulated Annealing</string>
+   </property>
+  </action>
+  <action name="QuitAction">
+   <property name="text">
+    <string>Goodbye</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>

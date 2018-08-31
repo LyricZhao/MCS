@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Logo/logo.psd</file>
+        <file>main.cpp</file>
+        <file>mainwindow.cpp</file>
+        <file>mainwindow.h</file>
+        <file>Logo/payme.png</file>
+        <file>Logo/payme.psd</file>
+        <file>Logo/logo.png</file>
+    </qresource>
+</RCC>
