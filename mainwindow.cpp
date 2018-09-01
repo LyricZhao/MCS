@@ -40,7 +40,7 @@ void MainWindow::on_ComputeAction_triggered() {
 
 void MainWindow::on_SAAction_triggered() {
     bool ok = false;
-    double ret = QInputDialog:: getDouble(this, tr("MCS"), tr("Please input the target flow."), 150, 100, 200, 0, &ok);
+    double ret = QInputDialog:: getDouble(this, tr("MCS"), tr("Please input the target flow."), 150, 0, 400, 0, &ok);
     if(!ok) return;
 
     NewComputeWin *ncw = new NewComputeWin(this, true, ret);

@@ -132,6 +132,24 @@ void ComputeMain:: paintEvent(QPaintEvent *ev) {
         painter.setBrush(qSH[i] ? (getColor(fH[i])) : (Qt:: gray));
         painter.drawRect(qrecH[i]);
     }
+
+    // draw point
+    painter.setPen(QPen(Qt:: black, 1, Qt::SolidLine));
+    painter.setBrush(Qt:: white);
+    for(int i = 0; i < row; ++ i) {
+        for(int j = 0; j < row; ++ j) {
+            int count = 0;
+            if(i == 0) count += (j == i1 || j == i2);
+            if(i == row - 1) count += (j == o1 || j == o2 || j == o3);
+            if(i != 0) count += qSV[(i - 1) * row + j];
+            if(i != row - 1) count += qSV[i * row + j];
+            if(j != 0) count += qSH[i * (row - 1) + j - 1];
+            if(j != row - 1) count += qSH[i * (row - 1) + j];
+            if(count >= 2)
+                painter.drawEllipse(QPoint(j * (mL + mR) + mL / 2, i * (mL + mR) + mL / 2), 6, 6);
+        }
+    }
+    painter.setPen(Qt:: NoPen);
 }
 
 int ComputeMain:: getMax(int v, int i) {
