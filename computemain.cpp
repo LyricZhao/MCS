@@ -4,6 +4,7 @@
 # include "computemain.h"
 # include "ui_computemain.h"
 
+# include <cmath>
 # include <tuple>
 # include <unistd.h>
 # include <iostream>
@@ -69,7 +70,7 @@ ComputeMain:: ComputeMain(QWidget *parent, int r, int in1, int in2, int ou1, int
 }
 
 QColor ComputeMain:: getColor(double v) {
-    if(isnan(v) || v <= 0.00001) return Qt:: black;
+    if(std:: isnan(v) || v <= 0.00001) return Qt:: black;
     double ratio = v / 400;
     QColor s = Qt:: red, e = Qt:: blue;
     int red = (int)(ratio * s.red() + (1 - ratio) * e.red());
@@ -261,7 +262,7 @@ ComputeMain::~ComputeMain() {
 }
 
 double ComputeMain:: cv(double v) {
-    if(isnan(v) || v < 0.00001) return 0;
+    if(std:: isnan(v) || v < 0.00001) return 0;
     return v;
 }
 

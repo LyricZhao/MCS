@@ -58,7 +58,7 @@ void SA:: updateOnce() {
     v1 = result[2 * row * (row - 1) + 2];
     v2 = result[2 * row * (row - 1) + 3];
     v3 = result[2 * row * (row - 1) + 4];
-    if(isnan(v1) || isnan(v2) || isnan(v3)) minDelta = 1e8;
+    if(std:: isnan(v1) || std:: isnan(v2) || std:: isnan(v3)) minDelta = 1e8;
     else {
         minDelta = std:: min(fabs(v1 - target), fabs(v2 - target));
         minDelta = std:: min(minDelta, fabs(v3 - target));

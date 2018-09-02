@@ -15,7 +15,7 @@ CSolver:: CSolver(int n0, std::vector<std::tuple<int, int, double> > &edges): n(
     for(unsigned i = 0; i < edges.size(); ++ i) {
         int s = std:: get<0>(edges[i]), e = std:: get<1>(edges[i]);
         double sp = std:: get<2>(edges[i]);
-        if(isnan(sp) || sp <= 0) continue;
+        if(std:: isnan(sp) || sp <= 0) continue;
         // std:: cout << s << "->" << e << ":" << sp << std:: endl;
         Edge edge(s, e, i, sp, 0);
         if(i == edges.size() - 5) edge.c = 1.0, ret[edge.id] = 1.0; // in1
